@@ -1,0 +1,148 @@
+body {
+    background-color: lightslategrey;
+    padding: 1em;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#header {
+    width: 70vw;
+}
+
+#title {
+    margin: 0.5em;
+}
+
+#topbar {
+    margin: 0.5em 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+#text-file {
+    width: 35vw;
+    padding: 0.5em;
+    border: 5px solid darkslategray;
+}
+
+#keyword-file {
+    width: 25vw;
+    padding: 0.5em;
+    border: 5px solid darkslategray;
+}
+
+#text-file-heading,#keyword-file-heading {
+    margin-top: 0;
+}
+
+
+#text-file-div,#keyword-file-div {
+    display: flex;
+}
+
+#open,#new,#save,#open-kw {
+    flex: 0 0 auto;
+    margin-right: 0.5em;
+    border-radius: 5px;
+    padding: 0.5em;
+    background-color: lightgrey;
+}
+
+#filename,#filename-kw {
+    flex: 1 0 auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 12px;
+    padding: 0.5em;
+    text-align: center;
+}
+
+#editor {
+    width: 70vw;
+    display: flex;
+}
+
+#num {
+    width: 3em;
+    flex-grow: 0;
+    flex-shrink: 0;
+    resize: none;
+    font-size: 16px;
+    line-height: normal;
+    overflow: hidden;
+    text-align: right;
+    padding-right: 0.5em;
+    background-color: lightgray;
+}
+
+#box {
+    flex-shrink: 0;
+    flex-grow: 1;
+    background-color: white;
+    resize: none;
+    font-size: 16px;
+    line-height: normal;
+    outline: none;
+    border: none;
+    padding-left: 0.5em;
+
+}
+
+#box:focus {
+    border: 1px solid #24a0ED;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+#fixed {
+    position: fixed;
+    right: 1em;
+    top: 0;
+    width: 25vw;
+    height: 100vh;
+    background-color: lightslategray;
+    padding: 0 0.5em;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#sugg {
+    height: 40vh;
+    overflow: hidden;
+    padding: 0.5em;
+    background-color: lightblue;
+    border: 2px solid gray;
+}
+
+#kw {
+    height: 50vh;
+    overflow-y: hidden;
+    padding: 0.5em;
+    background-color: lightgreen;
+    border: 2px solid gray;
+    position: relative;
+}
+
+.kw-item {
+    margin: 0.25em;
+}
+
+#kw-check {
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+}
+
+#count-div {
+    padding: 0.5em;
+    background-color: lightskyblue;
+    margin-bottom: 0.5em;
+}
+
+
+/* #sugg-item {
+    display: inline-block;
+    overflow-wrap: break-word;
+} */
