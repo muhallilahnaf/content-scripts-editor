@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="./style.css">
     <title>Custom Autocomplete Text Editor</title>
 </head>
+
 <body>
     <header id="header">
         <h1 id="title">Custom Autocomplete Text Editor</h1>
@@ -38,7 +40,7 @@
         <section id="test"></section>
         <section id="editor">
             <textarea id="num" rows="100" disabled></textarea>
-            <textarea id="box" rows="100" >text editor</textarea>
+            <textarea id="box" rows="100">text editor</textarea>
         </section>
         <section id="fixed">
             <section id="sugg">
@@ -47,13 +49,8 @@
                     <span id="count-number">0</span>
                     <span id="count-required"> / 0</span>
                 </div>
-                <div id="sugg-item">
-                    autocomplete suggestions and word count gkjdsnflksdnlksdjflkdsjlksdjglkdsjglkdsjgkdsjgdsjgidsjgdsjgdsjg
-                    Lorem ipsum dolor <br> sit amet consectetur <br>adipisicing elit<br>. Voluptatum tem<br>pore ratione in expedi<br>ta sit pariatur, at <br>eveniet. Moles<br>tias, officia pla<br>ceat eius earum beatae i<br>ncidunt harum aperiam volupt<br>ates iusto 
-                    sap<br>iente iure!
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi fu<br>git et velit id cum obca<br>ecati eum facere. Dignissimos <br>et tempora repudiandae esse s<br>uscipit sapiente aliquid mag<br>nam harum iste, cum<br>que numquam.  
-                </div>
-            </section>  
+                <div id="sugg-items"></div>
+            </section>
             <section id="kw">
                 All Keywords: <button id="kw-check">check</button>
             </section>
@@ -63,4 +60,5 @@
     <script src="./helpers.js"></script>
     <script src="./index.js"></script>
 </body>
+
 </html>

@@ -21,7 +21,7 @@ const kwFilename = document.getElementById('filename-kw')
 const kwOpen = document.getElementById('open-kw')
 const kw = document.getElementById('kw')
 const kwCheck = document.getElementById('kw-check')
-const suggItem = document.getElementById('sugg-item')
+const suggItems = document.getElementById('sugg-items')
 
 
 

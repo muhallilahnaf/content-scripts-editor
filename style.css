@@ -125,7 +125,7 @@ body {
     position: relative;
 }
 
-.kw-item {
+.kw-item,.sugg-item {
     margin: 0.25em;
 }
 

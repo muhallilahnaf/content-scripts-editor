@@ -42,7 +42,7 @@ const checkEmptyObj = (o) => {
 // if keyword occurence within limit: adds strikethrough in html
 const checkRequirement = () => {
     if (!checkEmptyObj(keywords)) {
-        for ( const [key,value] of Object.entries(keywords) ) {
+        for (const [key, value] of Object.entries(keywords.keywords)) {
             const reKey = RegExp(` ${key} `, 'gi')
             const matchNos = [...box.value.matchAll(reKey)].length
             const el = document.getElementsByClassName(sanitizeClass(key))[0]
@@ -50,9 +50,53 @@ const checkRequirement = () => {
             if (matchNos >= value[0] && matchNos <= value[1]) {
                 el.style.textDecoration = 'line-through'
             }
-        }    
+        }
     } else {
         alert('load keyword file first')
+    }
+}
+
+// generate suggestion item html components
+const suggItemComponent = (k, v) => {
+    const p = document.createElement('p')
+    p.className = `sugg-item ${sanitizeClass(k)}`
+    p.innerHTML = `${k}: (${v[0]} - ${v[1]})`
+    return p
+}
+
+// check if suggestion is already present in suggestion items div
+const checkSuggPresence = (k) => {
+    if (suggItems.querySelector(`.${sanitizeClass(k)}`)) {
+        return true
+    }
+    return false
+}
+
+// check if pressedKeys is included in keyword
+const checkPressedKeysPresence = (k) => {
+    if (k.includes(pressedKeys.toLowerCase())) {
+        return true
+    }
+    return false
+}
+
+// check if pressed key is alphanumeric (a-z and 0-9)
+const checkPressedKeys = (key) => {
+    if (key > 64 && key < 91) {
+        // a-z
+        return true
+    }
+    if (key > 47 && key < 58) {
+        // 0-9
+        return true
+    }
+    return false
+}
+
+// clear suggestions
+const clearSuggs = () => {
+    while (suggItems.firstChild) {
+        suggItems.firstChild.remove()
     }
 }
 
@@ -68,13 +112,20 @@ const typeInBox = (e) => {
     if (!checkEmptyObj(keywords)) {
         // suggestion
         const key = e.which || e.keyCode
-        if (key > 64 && key < 91) {
+        if (checkPressedKeys(key)) {
             pressedKeys += String.fromCharCode(key)
-            // search for pressedKeys in kw
+            // search for pressedKeys in keywords
+            for (const [keyword, value] of Object.entries(keywords.keywords)) {
+                if (checkPressedKeysPresence(keyword) && !checkSuggPresence(keyword)) {
+                    const component = suggItemComponent(keyword, value)
+                    suggItems.appendChild(component)
+                }
+            }
         }
         // if key is space, clear pressedKeys and check requirement
         if (key === 32) {
             pressedKeys = ''
+            clearSuggs()
             // checkRequirement()
         }
 
@@ -100,7 +151,7 @@ const savePrevious = async () => {
         alert('previous file saved')
     }
 }
-  
+
 // open text file and paste value in box
 const openListener = async () => {
     savePrevious()
@@ -137,7 +188,7 @@ const saveListener = async () => {
 const kwComponent = (k, v) => {
     const p = document.createElement('p')
     p.className = `kw-item ${sanitizeClass(k)}`
-    p.innerHTML = `${key}: `
+    p.innerHTML = `${k}: `
 
     const span = document.createElement('span')
     span.className = 'occurance'
@@ -155,7 +206,7 @@ const kwLoad = () => {
     countReq.innerHTML = ` / (${kount[0]}-${kount[1]})`
 
     // paste keywords
-    for ( const [key, value] of Object.entries(keywords.keywords) ) {
+    for (const [key, value] of Object.entries(keywords.keywords)) {
         // const keywordStr = `${key}: (${value[0]} - ${value[1]})`
         const component = kwComponent(key, value)
         kw.appendChild(component)
