@@ -7,17 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
-    <title>Custom Autocomplete Text Editor</title>
+    <title>Custom Suggestions Text Editor</title>
 </head>
 
 <body>
     <header id="header">
-        <h1 id="title">Custom Autocomplete Text Editor</h1>
+        <div id="header-top">
+            <h1 id="title">Custom Suggestions Text Editor</h1>
+            <p id="link">
+                <a id="github-link" href="https://github.com/muhallilahnaf/content-scripts-editor">GitHub</a>
+            </p>
+        </div>
         <div id="topbar">
             <div id="text-file">
-                <p id="text-file-heading">
-                    <b>Text File</b>
-                </p>
+                <div id="text-file-top">
+                    <p id="text-file-heading">
+                        <b>Text File</b>
+                    </p>
+                    <p id="saved-at">Last Saved At:
+                        <span id="saved-at-time"></span>
+                    </p>
+                </div>
                 <div id="text-file-div">
                     <button id="open">open</button>
                     <button id="new">new</button>
@@ -26,9 +36,11 @@
                 </div>
             </div>
             <div id="keyword-file">
-                <p id="keyword-file-heading">
-                    <b>Keyword File</b>
-                </p>
+                <div id="keyword-file-top">
+                    <p id="keyword-file-heading">
+                        <b>Keyword File</b>
+                    </p>
+                </div>
                 <div id="keyword-file-div">
                     <button id="open-kw">open</button>
                     <span id="filename-kw"></span>
@@ -39,8 +51,8 @@
     <div>
         <section id="test"></section>
         <section id="editor">
-            <textarea id="num" rows="100" disabled></textarea>
-            <textarea id="box" rows="100">text editor</textarea>
+            <textarea id="num" rows="999" disabled></textarea>
+            <textarea id="box" rows="999" autofocus>text editor</textarea>
         </section>
         <section id="fixed">
             <section id="sugg">
@@ -58,6 +70,7 @@
     </div>
     <script src="./fs-helpers.js"></script>
     <script src="./helpers.js"></script>
+    <script src="./actions.js"></script>
     <script src="./index.js"></script>
 </body>
 

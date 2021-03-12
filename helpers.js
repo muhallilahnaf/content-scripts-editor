@@ -1,60 +1,21 @@
 'use strict';
 
-// add line numbers to textarea
-const addLineNumbers = () => {
-    const num = document.getElementById('num')
-    let s = ''
-    for (let i = 1; i < 101; i++) {
-        s += `${i}.\n`
-    }
-    num.value = s
-}
+// ========================================
+// this script depends on fs-helpers.js
+// ========================================
 
-// gives caret position
-const caretPos = () => {
-    if (document.activeElement === box) {
-        let posStart = box.selectionStart //number
-        let posEnd = box.selectionEnd //number
-        let notInitial = (posStart !== 0) && (posEnd !== 0)
-        let notSelection = (posStart === posEnd)
-        if (notInitial && notSelection) {
-            test.innerHTML = `caret pos: ${posStart}`
-        } else {
-            test.innerHTML = 'initial or selection'
-        }
-    } else {
-        test.innerHTML = 'not focused'
-    }
-}
 
 // sanitize keywords for use as classname
 const sanitizeClass = (c) => {
     return c.replace(/[^A-Za-z0-9]/g, '-')
 }
 
+
 // check if object is empty
 const checkEmptyObj = (o) => {
     return (Object.keys(o).length === 0)
 }
 
-// searches text box to find no. of occurance of keyword
-// updates occurance no.
-// if keyword occurence within limit: adds strikethrough in html
-const checkRequirement = () => {
-    if (!checkEmptyObj(keywords)) {
-        for (const [key, value] of Object.entries(keywords.keywords)) {
-            const reKey = RegExp(` ${key} `, 'gi')
-            const matchNos = [...box.value.matchAll(reKey)].length
-            const el = document.getElementsByClassName(sanitizeClass(key))[0]
-            el.querySelector('.occurance').innerHTML = matchNos.toString()
-            if (matchNos >= value[0] && matchNos <= value[1]) {
-                el.style.textDecoration = 'line-through'
-            }
-        }
-    } else {
-        alert('load keyword file first')
-    }
-}
 
 // generate suggestion item html components
 const suggItemComponent = (k, v) => {
@@ -64,78 +25,83 @@ const suggItemComponent = (k, v) => {
     return p
 }
 
+
 // check if suggestion is already present in suggestion items div
 const checkSuggPresence = (k) => {
+
     if (suggItems.querySelector(`.${sanitizeClass(k)}`)) {
         return true
     }
+
     return false
 }
+
 
 // check if pressedKeys is included in keyword
 const checkPressedKeysPresence = (k) => {
+
     if (k.includes(pressedKeys.toLowerCase())) {
         return true
     }
+
     return false
 }
 
+
 // check if pressed key is alphanumeric (a-z and 0-9)
-const checkPressedKeys = (key) => {
+const isAlphanumericKey = (key) => {
+
     if (key > 64 && key < 91) {
         // a-z
         return true
     }
+
     if (key > 47 && key < 58) {
         // 0-9
         return true
     }
+
     return false
 }
 
+
 // clear suggestions
 const clearSuggs = () => {
+
     while (suggItems.firstChild) {
         suggItems.firstChild.remove()
     }
 }
 
-// executes on keyup in textbox (word count, suggestions etc.)
-const typeInBox = (e) => {
-    // word count
+
+// find word count and display in html
+const wordCount = () => {
     const countArray = box.value.split(' ')
+
     const realcountArray = countArray.filter(word => {
         return (word !== '' && word.length > 2)
     })
+
     count.innerHTML = realcountArray.length
+}
 
-    if (!checkEmptyObj(keywords)) {
-        // suggestion
-        const key = e.which || e.keyCode
-        if (checkPressedKeys(key)) {
-            pressedKeys += String.fromCharCode(key)
-            // search for pressedKeys in keywords
-            for (const [keyword, value] of Object.entries(keywords.keywords)) {
-                if (checkPressedKeysPresence(keyword) && !checkSuggPresence(keyword)) {
-                    const component = suggItemComponent(keyword, value)
-                    suggItems.appendChild(component)
-                }
-            }
+
+// search for pressedKeys in keywords and append in sugg-items div
+const searchPressedKeys = () => {
+
+    for (const [keyword, value] of Object.entries(keywords.keywords)) {
+
+        if (checkPressedKeysPresence(keyword)) {
+            const component = suggItemComponent(keyword, value)
+            suggItems.appendChild(component)
         }
-        // if key is space, clear pressedKeys and check requirement
-        if (key === 32) {
-            pressedKeys = ''
-            clearSuggs()
-            // checkRequirement()
-        }
-
-        // check requirement
-
     }
 }
 
+
 // populate `fsaa` global variable with data for text file
 const setFsaa = async (fileHandle, type) => {
+
     if (await verifyPermission(fileHandle, true)) {
         fsaa.fileHandle = fileHandle
         fsaa.type = type
@@ -144,45 +110,23 @@ const setFsaa = async (fileHandle, type) => {
     }
 }
 
+
 // save current file before opening new one
 const savePrevious = async () => {
+
     if (fsaa.fileHandle) {
         await writeFile(fsaa.fileHandle, box.value)
         alert('previous file saved')
     }
 }
 
-// open text file and paste value in box
-const openListener = async () => {
-    savePrevious()
-    const fileHandle = await getFileHandle()
-    setFsaa(fileHandle, 'open')
-    const file = await fileHandle.getFile()
-    filename.innerHTML = file.name
-    const contents = await readFile(file)
-    box.value = contents
+
+// change savedAt value and load in html
+const setSavedAt = () => {
+    savedAt = new Date().toLocaleTimeString()
+    savedAtTime.innerHTML = savedAt
 }
 
-// open new text file and paste value in box
-const newListener = async () => {
-    savePrevious()
-    const fileHandle = await getNewFileHandle()
-    setFsaa(fileHandle, 'new')
-    const file = await fileHandle.getFile()
-    filename.innerHTML = file.name
-    const contents = await readFile(file)
-    box.value = contents
-}
-
-// save text file
-const saveListener = async () => {
-    if (fsaa.fileHandle) {
-        writeFile(fsaa.fileHandle, box.value)
-        alert('saved')
-    } else {
-        alert('no file open')
-    }
-}
 
 // generate keyword html components
 const kwComponent = (k, v) => {
@@ -199,6 +143,7 @@ const kwComponent = (k, v) => {
     return p
 }
 
+
 // load stuff to html after keyword json file loads
 const kwLoad = () => {
     // paste required word count
@@ -207,19 +152,9 @@ const kwLoad = () => {
 
     // paste keywords
     for (const [key, value] of Object.entries(keywords.keywords)) {
-        // const keywordStr = `${key}: (${value[0]} - ${value[1]})`
         const component = kwComponent(key, value)
         kw.appendChild(component)
     }
 }
 
-// open keyword json file and save value in global variable `kw`
-const kwOpenListener = async () => {
-    const fileHandle = await getFileHandle()
-    const file = await fileHandle.getFile()
-    kwFilename.innerHTML = file.name
-    const contents = await readFile(file)
-    keywords = JSON.parse(contents)
-    kwLoad()
-}
 

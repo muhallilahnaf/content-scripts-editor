@@ -1,3 +1,14 @@
+// ========================================
+// taken from:
+// https://github.com/GoogleChromeLabs/text-editor/blob/main/src/inline-scripts/fs-helpers.js
+// ========================================
+
+
+// ========================================
+// this script doesn't depend on any other scripts
+// ========================================
+
+
 const getFileHandle = () => {
     if ('showOpenFilePicker' in window) {
         return window.showOpenFilePicker().then((handles) => handles[0]);
@@ -9,7 +20,7 @@ const getNewFileHandle = () => {
         const opts = {
             types: [{
                 description: 'Text file',
-                accept: {'text/plain': ['.txt']},
+                accept: { 'text/plain': ['.txt'] },
             }],
         };
         return window.showSaveFilePicker(opts);
@@ -22,7 +33,7 @@ const readFile = (file) => {
     }
     return 'cannot read file'
 }
-        
+
 const writeFile = async (fileHandle, contents) => {
     // Create a FileSystemWritableFileStream to write to.
     const writable = await fileHandle.createWritable();
@@ -31,7 +42,7 @@ const writeFile = async (fileHandle, contents) => {
     // Close the file and write the contents to disk.
     await writable.close();
 }
-    
+
 const verifyPermission = async (fileHandle, withWrite) => {
     const opts = {};
     if (withWrite) {

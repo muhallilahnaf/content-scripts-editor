@@ -1,12 +1,18 @@
 'use strict';
 
+// ========================================
+// this script depends on all other scripts
+// should be loaded last
+// ========================================
+
+
 // adds line numbers everytime page loads
 addLineNumbers()
 
 
 
 // ========================================
-// will be used by different functions
+// html elements; will be used by different functions
 // ========================================
 
 const test = document.getElementById('test')
@@ -22,11 +28,12 @@ const kwOpen = document.getElementById('open-kw')
 const kw = document.getElementById('kw')
 const kwCheck = document.getElementById('kw-check')
 const suggItems = document.getElementById('sugg-items')
+const savedAtTime = document.getElementById('saved-at-time')
 
 
 
 // ========================================
-// variables for storing data
+// global variables for storing data
 // ========================================
 
 // stores words to search for suggestions
@@ -38,7 +45,10 @@ let fsaa = {
 }
 // keyword object
 let keywords = {}
-// stores textbox words
+// keyword object status
+let isKeywordsEmpty = true
+// store text save time
+let savedAt = ''
 
 
 
@@ -62,8 +72,8 @@ kwOpen.addEventListener('click', kwOpenListener)
 kwCheck.addEventListener('click', checkRequirement)
 
 // not working
-window.addEventListener('beforeunload', (e) => {
-  alert('eeeeeeeeeeee')
-  e.preventDefault()
-})
+// window.addEventListener('beforeunload', (e) => {
+//   alert('eeeeeeeeeeee')
+//   e.preventDefault()
+// })
 

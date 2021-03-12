@@ -5,12 +5,35 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+textarea,button {
+    font-family: inherit;
+}
+
 #header {
     width: 70vw;
 }
 
+#header-top {
+    display: flex;
+    justify-content: space-between;
+}
+
 #title {
     margin: 0.5em;
+}
+
+#link {
+    margin-right: 1em;
+}
+
+#github-link {
+    text-decoration: none;
+    color: gainsboro;
+}
+
+#github-link:hover {
+    text-decoration: underline;
+    color: black;
 }
 
 #topbar {
@@ -32,10 +55,19 @@ body {
     border: 5px solid darkslategray;
 }
 
+#text-file-top,#keyword-file-top {
+    display: flex;
+    justify-content: space-between;
+}
+
 #text-file-heading,#keyword-file-heading {
     margin-top: 0;
 }
 
+#saved-at {
+    margin-top: 0;
+    font-size: 12px;
+}
 
 #text-file-div,#keyword-file-div {
     display: flex;
