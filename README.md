@@ -18,15 +18,16 @@ Keyword files are read-only.
 - **Keyword file format:** .json, as follows:
 ```json
 {
-    "wordCount": [99, 100], // min = 99, max = 100
+    "wordCount": [99, 100],
     "keywords": {
-        "keyword1": [2, 6], // min = 2, max = 6
+        "keyword1": [2, 6],
         "keyword2": [6, 9],
         "anotherOne": [4, 20],
         "andAnother": [13, 37]
     }
 }
 ```
+here, first item in the array is the *minimum* count, second item in the array is the *maximum* count.
 
 ## Things not available yet
 
