@@ -1,5 +1,7 @@
 # Custom Suggestions Text Editor
 
+[Link](https://muhallilahnaf.github.io/content-scripts-editor/)
+
 A browser-based text editor where you can load your own keywords with no. of times each keyword should be used.
 
 It will suggest keyword(s) based on what you type, and check if requirements have been fulfilled.
@@ -16,13 +18,12 @@ Keyword files are read-only.
 - **Keyword file format:** .json, as follows:
 ```json
 {
-    "wordCount": ["min", "max"],
+    "wordCount": [99, 100], // min = 99, max = 100
     "keywords": {
-        "keyword1": ["min", "max"],
-        "keyword2": ["min", "max"],
-        ...
-        ...
-        ...
+        "keyword1": [2, 6], // min = 2, max = 6
+        "keyword2": [6, 9],
+        "anotherOne": [4, 20],
+        "andAnother": [13, 37]
     }
 }
 ```
