@@ -1,8 +1,10 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 body {
     background-color: lightslategrey;
-    padding: 1em;
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 textarea,button {
@@ -10,7 +12,8 @@ textarea,button {
 }
 
 #header {
-    width: 70vw;
+    width: calc(100vw - 300px);
+    margin-left: 10px;
 }
 
 #header-top {
@@ -46,13 +49,19 @@ textarea,button {
 #text-file {
     width: 35vw;
     padding: 0.5em;
-    border: 5px solid darkslategray;
+    /* border: 5px solid darkslategray; */
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: #8D99A6;
 }
 
 #keyword-file {
     width: 25vw;
     padding: 0.5em;
-    border: 5px solid darkslategray;
+    /* border: 5px solid darkslategray; */
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: #8D99A6;
 }
 
 #text-file-top,#keyword-file-top {
@@ -91,7 +100,8 @@ textarea,button {
 }
 
 #editor {
-    width: 70vw;
+    width: calc(100vw - 300px);
+    margin-left: 10px;
     display: flex;
 }
 
@@ -128,32 +138,33 @@ textarea,button {
 
 #fixed {
     position: fixed;
-    right: 1em;
+    right: 0;
     top: 0;
-    width: 25vw;
+    width: 250px;
     height: 100vh;
-    background-color: lightslategray;
-    padding: 0 0.5em;
+    border-left: 5px solid darkslategray;
+    background-color: lightgray;
     font-size: 13px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
 }
 
 #sugg {
     height: 40vh;
-    overflow: hidden;
+    overflow-y: hidden;
+    margin: 10px 5px;
     padding: 0.5em;
-    background-color: lightblue;
-    border: 2px solid gray;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    background-color: gainsboro;
 }
 
 #kw {
     height: 50vh;
     overflow-y: hidden;
+    margin: 0 5px 10px 5px;
     padding: 0.5em;
-    background-color: lightgreen;
-    border: 2px solid gray;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    background-color: linen;
     position: relative;
 }
 
@@ -169,12 +180,18 @@ textarea,button {
 
 #count-div {
     padding: 0.5em;
-    background-color: lightskyblue;
+    background-color: darkgrey;
     margin-bottom: 0.5em;
+    border-radius: 5px;
 }
 
-
-/* #sugg-item {
-    display: inline-block;
-    overflow-wrap: break-word;
-} */
+#toggle-sidebar {
+    border-radius: 5px;
+    padding: 0.5em;
+    background-color: black;
+    color: white;
+    opacity: 0.7;
+    position: fixed;
+    bottom: 5px;
+    right: 10px;
+}

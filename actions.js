@@ -17,6 +17,33 @@ const addLineNumbers = () => {
 }
 
 
+// toggle sidebar
+const toggleSidebar = () => {
+
+    if (showSidebar) {
+        fixed.style.visibility = 'visible'
+        editor.style.width = 'calc(100vw - 300px)'
+        header.style.width = 'calc(100vw - 300px)'
+        sidebarButton.innerHTML = '=>'
+    } else {
+        fixed.style.visibility = 'hidden'
+        editor.style.width = '90vw'
+        header.style.width = '90vw'
+        sidebarButton.innerHTML = '<='
+    }
+}
+
+
+// get window size and show message
+const confirmWindowSize = () => {
+    console.log(document.documentElement.clientWidth)
+    if (document.documentElement.clientWidth < 992) {
+        showSidebar = !confirm('UI not optimal for small window/screen, hide sidebar?')
+    }
+    toggleSidebar()
+}
+
+
 // not using now
 // gives caret position
 const caretPos = () => {
@@ -69,6 +96,7 @@ const typeInBox = (e) => {
     // word count
     wordCount()
 
+    test.innerHTML = kw.clientWidth
     // suggestion
     if (!isKeywordsEmpty) {
         const key = e.which || e.keyCode
