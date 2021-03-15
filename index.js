@@ -10,7 +10,6 @@
 addLineNumbers()
 
 
-
 // ========================================
 // html elements; will be used by different functions
 // ========================================
@@ -29,6 +28,10 @@ const kw = document.getElementById('kw')
 const kwCheck = document.getElementById('kw-check')
 const suggItems = document.getElementById('sugg-items')
 const savedAtTime = document.getElementById('saved-at-time')
+const fixed = document.getElementById('fixed')
+const editor = document.getElementById('editor')
+const header = document.getElementById('header')
+const sidebarButton = document.getElementById('toggle-sidebar')
 
 
 
@@ -49,6 +52,7 @@ let keywords = {}
 let isKeywordsEmpty = true
 // store text save time
 let savedAt = ''
+let showSidebar = true
 
 
 
@@ -56,8 +60,19 @@ let savedAt = ''
 // assign event-listeners here
 // ========================================
 
+// if window-width < 992px, show message
+// confirmWindowSize()
+
+
 // execute on keyup inside box for word count, suggestions etc.
 box.addEventListener('keyup', typeInBox)
+
+
+// sidebar button
+// sidebarButton.addEventListener('click', () => {
+//   showSidebar = !showSidebar
+//   toggleSidebar()
+// })
 
 
 // text file stuff

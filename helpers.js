@@ -7,7 +7,13 @@
 
 // sanitize keywords for use as classname
 const sanitizeClass = (c) => {
-    return c.replace(/[^A-Za-z0-9]/g, '-')
+    let s = c.replace(/[^A-Za-z0-9]/g, '-')
+
+    if (!isNaN(s[0])) {
+        s = `NaN${s}`
+    }
+
+    return s
 }
 
 
