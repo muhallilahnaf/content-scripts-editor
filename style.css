@@ -23,6 +23,7 @@ body {
     margin: 0;
     min-width: 768px;
     width: 100%;
+    position: relative;
 }
 
 textarea, button {
@@ -30,13 +31,13 @@ textarea, button {
 }
 
 #header {
-    width: calc(100vw - 350px);
+    width: calc(100% - 350px);
     margin-left: 10px;
 }
 
 @media screen and (max-width: 1024px) {
     #header {
-        width: calc(100vw - 300px); /* 250 */
+        width: calc(100% - 300px); /* 250 */
     }
 }
 /* 
@@ -164,14 +165,14 @@ textarea, button {
 }
 
 #editor {
-    width: calc(100vw - 350px); /* 300 */
+    width: calc(100% - 350px); /* 300 */
     margin-left: 10px;
     display: flex;
 }
 
 @media screen and (max-width: 1024px) {
     #editor {
-        width: calc(100vw - 300px); /* 250 */
+        width: calc(100% - 300px); /* 250 */
     }
 }
 /* 
@@ -224,9 +225,16 @@ textarea, button {
     top: 0;
     width: 300px;
     height: 100vh;
+    min-height: 768px;
     border-left: 5px solid darkslategray;
     background-color: lightgray;
     font-size: 13px;
+}
+
+@media screen and (max-width: 768px) {
+    #fixed {
+        position: absolute;
+    }
 }
 
 @media screen and (max-width: 1024px) {
@@ -314,7 +322,7 @@ textarea, button {
     right: 10px;
 }
 
-#snackbar {
+/* #snackbar {
     position: fixed;
     background-color: black;
     color: white;
@@ -325,4 +333,4 @@ textarea, button {
     left: 50%;
     padding: 0.25em;
     border-radius: 10px;
-}
+} */

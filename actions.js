@@ -82,7 +82,7 @@ const checkRequirement = () => {
     if (!isKeywordsEmpty) {
 
         for (const [key, value] of Object.entries(keywords.keywords)) {
-            const reKey = RegExp(`\b${key}\b`, 'gi')
+            const reKey = RegExp(`\\b${key}\\b`, 'gi')
             const matchNos = [...box.value.matchAll(reKey)].length
 
             const el = document.querySelector(`.kw-item.${sanitizeClass(key)}`)
