@@ -61,7 +61,7 @@ let showSidebar = true
 // ========================================
 
 // if window-width < 992px, show message
-confirmWindowSize()
+// confirmWindowSize()
 
 
 // execute on keyup inside box for word count, suggestions etc.
@@ -69,10 +69,10 @@ box.addEventListener('keyup', typeInBox)
 
 
 // sidebar button
-sidebarButton.addEventListener('click', () => {
-  showSidebar = !showSidebar
-  toggleSidebar()
-})
+// sidebarButton.addEventListener('click', () => {
+//   showSidebar = !showSidebar
+//   toggleSidebar()
+// })
 
 
 // text file stuff

@@ -17,13 +17,21 @@ const addLineNumbers = () => {
 }
 
 
+// not using now
 // toggle sidebar
 const toggleSidebar = () => {
 
     if (showSidebar) {
         fixed.style.visibility = 'visible'
-        editor.style.width = 'calc(100vw - 300px)'
-        header.style.width = 'calc(100vw - 300px)'
+
+        if (document.documentElement.clientWidth <= 1024) {
+            editor.style.width = 'calc(100vw - 300px)'
+            header.style.width = 'calc(100vw - 300px)'
+        } else {
+            editor.style.width = 'calc(100vw - 350px)'
+            header.style.width = 'calc(100vw - 350px)'
+        }
+
         sidebarButton.innerHTML = '=>'
     } else {
         fixed.style.visibility = 'hidden'
@@ -34,9 +42,9 @@ const toggleSidebar = () => {
 }
 
 
+// not using now
 // get window size and show message
 const confirmWindowSize = () => {
-    console.log(document.documentElement.clientWidth)
     if (document.documentElement.clientWidth < 992) {
         showSidebar = !confirm('UI not optimal for small window/screen, hide sidebar?')
     }
@@ -74,7 +82,7 @@ const checkRequirement = () => {
     if (!isKeywordsEmpty) {
 
         for (const [key, value] of Object.entries(keywords.keywords)) {
-            const reKey = RegExp(` ${key} `, 'gi')
+            const reKey = RegExp(`\b${key}\b`, 'gi')
             const matchNos = [...box.value.matchAll(reKey)].length
 
             const el = document.querySelector(`.kw-item.${sanitizeClass(key)}`)
@@ -96,7 +104,6 @@ const typeInBox = (e) => {
     // word count
     wordCount()
 
-    test.innerHTML = kw.clientWidth
     // suggestion
     if (!isKeywordsEmpty) {
         const key = e.which || e.keyCode
@@ -152,8 +159,8 @@ const newListener = async () => {
     const file = await fileHandle.getFile()
     filename.innerHTML = file.name
 
-    const contents = await readFile(file)
-    box.value = contents
+    // const contents = await readFile(file)
+    // box.value = contents
 }
 
 
