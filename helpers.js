@@ -23,6 +23,38 @@ const checkEmptyObj = (o) => {
 }
 
 
+// returns caret position
+const caretPos = () => {
+
+    if (document.activeElement === box) {
+        const posStart = box.selectionStart
+        const posEnd = box.selectionEnd
+        const notInitial = (posStart !== 0) && (posEnd !== 0)
+        const notSelection = (posStart === posEnd)
+
+        if (notInitial && notSelection) {
+            return posStart
+        }
+    }
+    return null
+}
+
+
+// get word at caret position
+const getWordByPos = (p) => {
+
+    if (!p) return ''
+
+    let left = box.value.substring(0, p);
+    let right = box.value.substring(p);
+
+    left = left.replace(/^.+ /g, "");
+    right = right.replace(/ .+$/g, "");
+
+    return left + right;
+}
+
+
 // generate suggestion item html components
 const suggItemComponent = (k, v) => {
     const p = document.createElement('p')
@@ -44,9 +76,9 @@ const checkSuggPresence = (k) => {
 
 
 // check if pressedKeys is included in keyword
-const checkPressedKeysPresence = (k) => {
+const checkPressedKeysPresence = (w, k) => {
 
-    if (k.includes(pressedKeys.toLowerCase())) {
+    if (k.includes(w.toLowerCase())) {
         return true
     }
 
@@ -94,12 +126,16 @@ const wordCount = () => {
 
 // search for pressedKeys in keywords and append in sugg-items div
 const searchPressedKeys = () => {
+    const word = getWordByPos(caretPos())
 
-    for (const [keyword, value] of Object.entries(keywords.keywords)) {
+    if (word !== '') {
 
-        if (checkPressedKeysPresence(keyword)) {
-            const component = suggItemComponent(keyword, value)
-            suggItems.appendChild(component)
+        for (const [keyword, value] of Object.entries(keywords.keywords)) {
+
+            if (checkPressedKeysPresence(word, keyword)) {
+                const component = suggItemComponent(keyword, value)
+                suggItems.appendChild(component)
+            }
         }
     }
 }

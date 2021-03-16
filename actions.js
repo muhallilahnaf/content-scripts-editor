@@ -52,28 +52,6 @@ const confirmWindowSize = () => {
 }
 
 
-// not using now
-// gives caret position
-const caretPos = () => {
-
-    if (document.activeElement === box) {
-        let posStart = box.selectionStart //number
-        let posEnd = box.selectionEnd //number
-        let notInitial = (posStart !== 0) && (posEnd !== 0)
-        let notSelection = (posStart === posEnd)
-
-        if (notInitial && notSelection) {
-            test.innerHTML = `caret pos: ${posStart}`
-        } else {
-            test.innerHTML = 'initial or selection'
-        }
-
-    } else {
-        test.innerHTML = 'not focused'
-    }
-}
-
-
 // searches text box to find no. of occurance of keyword
 // updates occurance no.
 // if keyword occurence within limit: adds strikethrough in html
@@ -101,6 +79,8 @@ const checkRequirement = () => {
 
 // executes on keyup in textbox (word count, suggestions etc.)
 const typeInBox = (e) => {
+    clearSuggs()
+    searchPressedKeys()
     // word count
     wordCount()
 
