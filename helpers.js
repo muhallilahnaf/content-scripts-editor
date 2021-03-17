@@ -55,15 +55,6 @@ const getWordByPos = (p) => {
 }
 
 
-// generate suggestion item html components
-const suggItemComponent = (k, v) => {
-    const p = document.createElement('p')
-    p.className = `sugg-item ${sanitizeClass(k)}`
-    p.innerHTML = `${k}: (${v[0]} - ${v[1]})`
-    return p
-}
-
-
 // check if suggestion is already present in suggestion items div
 const checkSuggPresence = (k) => {
 
@@ -125,7 +116,7 @@ const wordCount = () => {
 
 
 // search for pressedKeys in keywords and append in sugg-items div
-const searchPressedKeys = () => {
+const searchSugg = () => {
     const word = getWordByPos(caretPos())
 
     if (word !== '') {
@@ -133,8 +124,7 @@ const searchPressedKeys = () => {
         for (const [keyword, value] of Object.entries(keywords.keywords)) {
 
             if (checkPressedKeysPresence(word, keyword)) {
-                const component = suggItemComponent(keyword, value)
-                suggItems.appendChild(component)
+                suggItems.appendChild(value.suggComponent)
             }
         }
     }
@@ -171,32 +161,102 @@ const setSavedAt = () => {
 
 
 // generate keyword html components
-const kwComponent = (k, v) => {
+const createComponent = (k, v, s) => {
     const p = document.createElement('p')
-    p.className = `kw-item ${sanitizeClass(k)}`
-    p.innerHTML = `${k}: `
+    const q = sanitizeClass(k)
+    p.className = (s === 'kw') ? `kw-item ${q}` : `sugg-item ${q}`
 
-    const span = document.createElement('span')
-    span.className = 'occurance'
-    span.innerHTML = '0'
+    const span1 = document.createElement('span')
+    span1.className = 'left'
+    span1.innerHTML = '0'
 
-    p.appendChild(span)
-    p.innerHTML += ` (${v[0]} - ${v[1]})`
+    const span2 = document.createElement('span')
+    span2.className = 'keyword'
+    span2.innerHTML = ` ${k} `
+
+    const span3 = document.createElement('span')
+    span3.className = 'occurance'
+    span3.innerHTML = '0'
+
+    const span4 = document.createElement('span')
+    span4.className = 'minmax'
+    span4.innerHTML = ` (${v[0]} - ${v[1]})`
+
+    p.appendChild(span1)
+    p.appendChild(span2)
+
+    if (s === 'kw') {
+        p.appendChild(span3)
+        p.appendChild(span4)
+    }
+
     return p
 }
 
 
-// load stuff to html after keyword json file loads
-const kwLoad = () => {
-    // paste required word count
-    const kount = keywords.wordCount // array
-    countReq.innerHTML = ` / (${kount[0]}-${kount[1]})`
+// create `keyword` dict
+const kwCreate = (t) => {
+    keywords.wordCount = t.wordCount
+    let kwObj = {}
 
-    // paste keywords
+
+    for (const [key, value] of Object.entries(t.keywords)) {
+        let tmpObj = {
+            min: value[0],
+            max: value[1],
+            occurance: 0,
+            fulfilled: false,
+            left: 0,
+            kwComponent: createComponent(key, value, 'kw'),
+            suggComponent: createComponent(key, value, 'sugg')
+        }
+        kwObj[key] = tmpObj
+    }
+
+    keywords.keywords = kwObj
+}
+
+
+// load word count in HTML
+const wordCountLoad = () => {
+    const kount = keywords.wordCount
+    countReq.innerHTML = ` / (${kount[0]} - ${kount[1]})`
+    wordCount()
+}
+
+
+// load kw in HTML
+const kwLoad = () => {
+
     for (const [key, value] of Object.entries(keywords.keywords)) {
-        const component = kwComponent(key, value)
-        kw.appendChild(component)
+        kw.appendChild(value.kwComponent)
     }
 }
 
 
+// validate value array
+const isValueArray = (a) => {
+
+    if (!Array.isArray(a) || a.length !== 2) return false
+    if (!Number.isInteger(a[0]) || !Number.isInteger(a[1])) return false
+    if (a[0] >= a[1]) return false
+
+    return true
+}
+
+
+// validate keywords json file
+const validateKeywords = (f) => {
+
+    // validate wordCount
+    if (!f.wordCount) return 'word count does not exist'
+    if (!isValueArray(f.wordCount)) return 'word count should be of type array'
+
+    // validate keywords
+    for (const [keyword, value] of Object.entries(f.keywords)) {
+
+        if (!isValueArray(value)) return 'word count should be of type array'
+    }
+
+    return 'valid'
+}
