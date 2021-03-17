@@ -31,7 +31,7 @@ const savedAtTime = document.getElementById('saved-at-time')
 const fixed = document.getElementById('fixed')
 const editor = document.getElementById('editor')
 const header = document.getElementById('header')
-const sidebarButton = document.getElementById('toggle-sidebar')
+// const sidebarButton = document.getElementById('toggle-sidebar')
 
 
 
@@ -39,8 +39,6 @@ const sidebarButton = document.getElementById('toggle-sidebar')
 // global variables for storing data
 // ========================================
 
-// stores words to search for suggestions
-let pressedKeys = ''
 // text file handle data
 let fsaa = {
   fileHandle: null,
@@ -52,7 +50,7 @@ let keywords = {}
 let isKeywordsEmpty = true
 // store text save time
 let savedAt = ''
-let showSidebar = true
+// let showSidebar = true
 
 
 
@@ -65,7 +63,7 @@ let showSidebar = true
 
 
 // execute on keyup inside box for word count, suggestions etc.
-box.addEventListener('keyup', typeInBox)
+box.addEventListener('keyup', keyUp)
 
 
 // sidebar button

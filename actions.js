@@ -61,38 +61,39 @@ const checkRequirement = () => {
         const reKey = RegExp(`\\b${key}\\b`, 'gi')
         const matchNos = [...box.value.matchAll(reKey)].length
 
-        const el = document.querySelector(`.kw-item.${sanitizeClass(key)}`)
+        const el = document.querySelector(`.kw-item.${value.class}`)
         el.querySelector('.occurance').innerHTML = matchNos.toString()
 
-        if (matchNos >= value[0] && matchNos <= value[1]) {
-            el.style.textDecoration = 'line-through'
-        }
-    }
+        const min = parseInt(value.min)
+        const left = (matchNos < min) ? (min - matchNos) : 0
+        el.querySelector('.left').innerHTML = left.toString()
 
+        if (left === 0 && matchNos <= parseInt(value.max)) {
+            value.fulfilled = true
+            el.style.textDecoration = 'line-through'
+            return
+        }
+
+        value.fulfilled = false
+        el.style.textDecoration = 'none'
+    }
 }
 
 
 // executes on keyup in textbox (word count, suggestions etc.)
-const typeInBox = (e) => {
+const keyUp = (e) => {
 
     // suggestion
     if (!isKeywordsEmpty) {
         clearSuggs()
         searchSugg()
         wordCount()
-        // const key = e.which || e.keyCode
 
-        // if key is alphanumeric, 
-        // search pressedKeys and populate sugg-items div
+        const key = e.which || e.keyCode
 
-        // if key is backspace, 
-        // change pressedKeys and search pressedKeys and populate sugg-items div
-
-        // if key is space, 
-        // clear pressedKeys and check requirement
-        if (key === 32) {
-            pressedKeys = ''
-            clearSuggs()
+        // if key is backspace, tab, enter or space 
+        // check requirement
+        if (key === 8 || key === 9 || key === 13 || key === 32) {
             checkRequirement()
         }
     }
@@ -159,6 +160,7 @@ const kwOpenListener = async () => {
         wordCountLoad()
         kwLoad()
     } else {
+        isKeywordsEmpty = true
         // show error message of kwValid
     }
 }

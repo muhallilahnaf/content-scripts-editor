@@ -17,6 +17,7 @@ const sanitizeClass = (c) => {
 }
 
 
+// not using now
 // check if object is empty
 const checkEmptyObj = (o) => {
     return (Object.keys(o).length === 0)
@@ -66,8 +67,8 @@ const checkSuggPresence = (k) => {
 }
 
 
-// check if pressedKeys is included in keyword
-const checkPressedKeysPresence = (w, k) => {
+// check if word is included in keyword
+const checkWordPresence = (w, k) => {
 
     if (k.includes(w.toLowerCase())) {
         return true
@@ -77,6 +78,7 @@ const checkPressedKeysPresence = (w, k) => {
 }
 
 
+// not using now
 // check if pressed key is alphanumeric (a-z and 0-9)
 const isAlphanumericKey = (key) => {
 
@@ -115,7 +117,7 @@ const wordCount = () => {
 }
 
 
-// search for pressedKeys in keywords and append in sugg-items div
+// search for words in keywords and append in sugg-items div
 const searchSugg = () => {
     const word = getWordByPos(caretPos())
 
@@ -123,7 +125,7 @@ const searchSugg = () => {
 
         for (const [keyword, value] of Object.entries(keywords.keywords)) {
 
-            if (checkPressedKeysPresence(word, keyword)) {
+            if ( checkWordPresence(word, keyword) && !value.fulfilled ) {
                 suggItems.appendChild(value.suggComponent)
             }
         }
@@ -161,10 +163,9 @@ const setSavedAt = () => {
 
 
 // generate keyword html components
-const createComponent = (k, v, s) => {
+const createComponent = (k, v, c, s) => {
     const p = document.createElement('p')
-    const q = sanitizeClass(k)
-    p.className = (s === 'kw') ? `kw-item ${q}` : `sugg-item ${q}`
+    p.className = (s === 'kw') ? `kw-item ${c}` : `sugg-item ${c}`
 
     const span1 = document.createElement('span')
     span1.className = 'left'
@@ -207,9 +208,11 @@ const kwCreate = (t) => {
             occurance: 0,
             fulfilled: false,
             left: 0,
-            kwComponent: createComponent(key, value, 'kw'),
-            suggComponent: createComponent(key, value, 'sugg')
+            class: sanitizeClass(key)
         }
+        tmpObj['kwComponent'] = createComponent(key, value, tmpObj.class, 'kw')
+        tmpObj['suggComponent'] = createComponent(key, value, tmpObj.class, 'sugg')
+
         kwObj[key] = tmpObj
     }
 
@@ -238,8 +241,8 @@ const kwLoad = () => {
 const isValueArray = (a) => {
 
     if (!Array.isArray(a) || a.length !== 2) return false
-    if (!Number.isInteger(a[0]) || !Number.isInteger(a[1])) return false
-    if (a[0] >= a[1]) return false
+    if (isNaN(a[0]) || isNaN(a[1])) return false    
+    if ( parseInt(a[0]) > parseInt(a[1]) ) return false
 
     return true
 }
